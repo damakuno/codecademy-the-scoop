@@ -49,7 +49,7 @@ const routes = {
 
 
 function loadDatabase() {
-  const readDatabase = null;
+  let readDatabase = null;
   if(fs.existsSync(databaseFilePath)) {
     readDatabase = yaml.safeLoad(fs.readFileSync(databaseFilePath,'utf8'));
   } else {
