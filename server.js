@@ -1,5 +1,6 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
+const databaseFilePath = 'database.yaml';
 // database is let instead of const to allow us to modify it in test.js
 let database = {
   users: {},
@@ -46,13 +47,19 @@ const routes = {
   }
 };
 
+
 function loadDatabase() {
-  const readDatabase = yaml.safeLoad(fs.readFileSync('database.yaml','utf8'));
+  const readDatabase = null;
+  if(fs.existsSync(databaseFilePath)) {
+    readDatabase = yaml.safeLoad(fs.readFileSync(databaseFilePath,'utf8'));
+  } else {
+    console.log(`${databaseFilePath} does not exist!`);
+  }
   return readDatabase;
 }
 
 function saveDatabase() {
-  fs.writeFileSync('database.yaml', yaml.safeDump(database));
+    fs.writeFileSync(databaseFilePath, yaml.safeDump(database));
 }
 
 function getUser(url, request) {
